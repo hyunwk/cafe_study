@@ -4,7 +4,7 @@ const App = class extends React.Component {
   render() {
     return (
       <>
-        <h1>React Running</h1>
+        <h1>Kakao map for cafe</h1>
         <Map />
       </>
     );
