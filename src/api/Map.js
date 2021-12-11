@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 
 const Map = () => {
   // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
-  var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+  //   var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
   useEffect(() => {
     var container = document.getElementById('map');
@@ -19,6 +19,7 @@ const Map = () => {
     // ps.categorySearch('CE7', placesSearchCB, { useMapBounds: true });
 
     // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+    // data = result array, status = 응답코드
     function placesSearchCB(data, status, pagination) {
       if (status === kakao.maps.services.Status.OK) {
         for (var i = 0; i < data.length; i++) {
@@ -33,7 +34,10 @@ const Map = () => {
       var marker = new kakao.maps.Marker({
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x),
+        title: place.place_name,
       });
+
+      displayInfoWindow(marker, place);
 
       // 마커에 클릭이벤트를 등록합니다
       kakao.maps.event.addListener(marker, 'click', function () {
@@ -45,6 +49,14 @@ const Map = () => {
         );
         infowindow.open(map, marker);
       });
+    }
+
+    function displayInfoWindow(marker, place) {
+      var infowindow = new kakao.maps.InfoWindow({
+        position: place.LatLng,
+        content: place.place_name,
+      });
+      infowindow.open(map, marker);
     }
 
     // 마우스 드래그로 지도 이동이 완료되었을 때 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
