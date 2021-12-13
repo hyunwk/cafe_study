@@ -27,4 +27,9 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    proxy: {
+      '/api': 'http://localhost:4000',
+    },
+  },
 };
